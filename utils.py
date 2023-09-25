@@ -33,3 +33,8 @@ def schema(f):
           for n, o in inspect.signature(f).parameters.items()}
     s = create_model(f'Input for `{f.__name__}`', **kw).schema()
     return dict(name=f.__name__, description=f.__doc__, parameters=s)
+def call_func(c):
+    fc = c.choices[0].message.function_call
+    if fc.name not in funcs_ok: return print(f'Not allowed: {fc.name}')
+    f = globals()[fc.name]
+    return f(**json.loads(fc.arguments))
