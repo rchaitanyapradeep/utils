@@ -1,3 +1,6 @@
+import ast
+import inspect
+
 def schema(f):
     """
     Generate a schema for the input function based on its signature and annotations.
@@ -80,6 +83,8 @@ def run(code):
     None
 
     """
+
+
     tree = ast.parse(code)
     last_node = tree.body[-1] if tree.body else None
     
